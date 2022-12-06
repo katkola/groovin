@@ -5,22 +5,104 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <script src=""></script>
     <title>Document</title>
 </head>
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+    #bg-main{
+        height: 100%;
+        width: 100%;    
+    }
+    #bg-center{
+        margin: 100px auto;
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+    }
+    .navbar{
+        margin: auto;
+        background-color: antiquewhite;
+        width: 90%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    #test{
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+    .croc{
+        position: absolute;
+        background-image: url("/flask_app/img/250px-Fuecoco.png");
+        background-repeat: no-repeat;
+        background-size: 100%;
+        width: 90px;
+        height: 90px;
+    }
+</style>
 <body>
-    <div class="pagey">
-        <div class="main">
-            <div class="player card-header text-center">
-                <img src="/flask_app/img/250px-Fuecoco.png" class="" alt="lil guy" srcset="">
-            </div>
+    <div id="bg-main">
+        <div id="bg-center">
+            <img id="test" src="/flask_app/img/250px-Fuecoco.png" alt="">
         </div>
-        <div class="navbar fixed-bottom flex-row">
-            <div class="nav-item col-3 bg-info">Go</div>
-            <div class=""></div>
-            <div class="nav-item col-3 bg-info">Stop</div>
+        <div class="navbar fixed-bottom">
+            <button>groove</button>
+            <button>add</button>
+            <button>stop</button>
         </div>
     </div>
-
 </body>
+<script type="text/javascript">
+    var fuecoco= {
+        left: 50,
+        top: 70
+    }
+    var crocs = [
+        //single-page format currently to deploy on github
+        //full deployment: obj will be modularized to sep js file
+        //left pos, top pos, swoosh left move, fly up move, flip dir facing
+        {left: 45, top: 55, swoosh:1, fly: 1, flip:false},
+        {left: 200, top: 60, swoosh:0, fly: 0, flip:false}
+    ]
+    function drawCroc(){
+        content= "";
+        
+        for (var idx = 0; idx < crocs.length; idx++) {
+            content+= "<div class='croc' style='left:"+crocs[idx].left+"px; top:"+crocs[idx].top+"px;'></div>";            
+            //content+= "<div class='croc' style='left:500px; top: 300px;'></div>";            
+        }
+		
+		document.getElementById("bg-center").innerHTML = content;
+	}
+    drawCroc()
+    function moveCroc(){
+        for(var idx=0; idx<crocs.length; idx++){
+                crocs[idx].top= crocs[idx].top+crocs[idx].fly;
+                crocs[idx].left= crocs[idx].left+crocs[idx].swoosh*5;
+            }
+    }
+    //main loop
+
+    //draw croco
+        //img> hat, tail
+        //position() = (x,y)
+        //flip, bool
+    function gameLoop(){
+        moveCroc();
+        drawCroc();
+        setTimeout(gameLoop, 500);
+    }
+    //gameLoop();
+    //position
+        //check colision, if hit, randomize direction
+        //direction {0,0,0,0}
+        // add direction to position
+
+    
+</script>
 </html>
